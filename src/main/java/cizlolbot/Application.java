@@ -1,14 +1,12 @@
 package cizlolbot;
 
+import cizlolbot.twitch.handlers.GreetingsHandlerService;
 import cizlolbot.twitch.irc.IrcBot;
 
 public class Application {
     public static void main(String[] args) {
-        IrcBot ircBot = new IrcBot("lcs");
-        ircBot.connect();
+        IrcBot ircBot = new IrcBot(new GreetingsHandlerService());
 
-        while(true) {
-            ircBot.readLine();
-        }
+        ircBot.run("lck");
     }
 }
