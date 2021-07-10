@@ -58,9 +58,7 @@ public class TwitchService {
 
     public String readLine() {
         try {
-            String line = input.readLine();
-            Thread.sleep(50);
-            return line;
+            return input.readLine();
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);

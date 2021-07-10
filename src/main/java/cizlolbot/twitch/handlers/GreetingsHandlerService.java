@@ -1,7 +1,7 @@
 package cizlolbot.twitch.handlers;
 
 import cizlolbot.twitch.TwitchService;
-import cizlolbot.twitch.irc.IrcMessage;
+import cizlolbot.twitch.irc.IrcPrivateMessage;
 import cizlolbot.twitch.irc.IrcUtils;
 import cizlolbot.twitch.utils.StringUtils;
 
@@ -18,15 +18,15 @@ public class GreetingsHandlerService implements HandlerService {
     private int nrMessages = 0;
     private int limitPerMinute = 3;
 
-    public GreetingsHandlerService() {
-        this.twitchService = TwitchService.getInstance();
+    public GreetingsHandlerService(TwitchService twitchService) {
+        this.twitchService = twitchService;
     }
 
     @Override
     public Consumer<String> getHandler(String channel) {
         return line -> {
             if (IrcUtils.isPrivMsg(line)) {
-                IrcMessage message = new IrcMessage(line);
+                IrcPrivateMessage message = new IrcPrivateMessage(line);
                 if (StringUtils.containsWord(message.getBody(), "hi")) {
                     throttle(() -> twitchService.sendMessage("hello :)", channel));
                 } else if (StringUtils.containsWord(message.getBody(), "hello")) {

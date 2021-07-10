@@ -1,11 +1,11 @@
 package cizlolbot.twitch.irc;
 
-public class IrcMessage {
+public class IrcPrivateMessage {
     private String from;
     private String to;
     private String body;
 
-    public IrcMessage(String rawLine) {
+    public IrcPrivateMessage(String rawLine) {
         from = rawLine.substring(1, rawLine.indexOf("!"));
 
         int atPos = rawLine.indexOf(":@");
