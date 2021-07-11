@@ -6,6 +6,8 @@ import cizlolbot.twitch.model.ChannelConfigItem;
 import cizlolbot.twitch.model.CommandReponseType;
 import cizlolbot.twitch.model.CommandResponse;
 import cizlolbot.twitch.model.CommandTriggerType;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import java.util.List;
 import java.util.Map;
@@ -13,27 +15,20 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+@Singleton
 public class ChannelConfigService {
     private ChannelConfigItemDao channelConfigItemDao;
     private CommandResponseDao commandResponseDao;
 
-    private static ChannelConfigService instance;
-
     private Map<String, Map<String, RichChannelConfigItem>> cachedConfig = new ConcurrentHashMap<>();
 
-    private ChannelConfigService(ChannelConfigItemDao channelConfigItemDao,
+    @Inject
+    public ChannelConfigService(ChannelConfigItemDao channelConfigItemDao,
                                  CommandResponseDao  commandResponseDao) {
         this.channelConfigItemDao = channelConfigItemDao;
         this.commandResponseDao = commandResponseDao;
     }
 
-    public static ChannelConfigService getInstance(ChannelConfigItemDao channelConfigItemDao,
-                                                   CommandResponseDao commandResponseDao) {
-        if (instance == null) {
-            instance = new ChannelConfigService(channelConfigItemDao, commandResponseDao);
-        }
-        return instance;
-    }
 
     public void addStaticReply(String channel, String command, String staticReply, CommandTriggerType triggerType) {
         CommandResponse commandResponse = new CommandResponse().setId(UUID.randomUUID().toString())

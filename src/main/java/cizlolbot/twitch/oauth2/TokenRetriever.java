@@ -2,6 +2,7 @@ package cizlolbot.twitch.oauth2;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.inject.Singleton;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+@Singleton
 public class TokenRetriever {
     private static final String clientId = "a9aakq6k3jo34vexd5zfndghpant72";
 
@@ -20,20 +22,6 @@ public class TokenRetriever {
     private static final String refreshToken = System.getenv("REFRESH_TOKEN");
 
     private OauthResponse cachedOauthResponse;
-    private static TokenRetriever instance;
-
-    // singleton
-    private TokenRetriever() {
-
-    }
-
-    public static TokenRetriever getInstance() {
-        if (instance == null) {
-            instance = new TokenRetriever();
-        }
-        return instance;
-    }
-
 
     public String getToken() {
         if (cachedOauthResponse != null) {

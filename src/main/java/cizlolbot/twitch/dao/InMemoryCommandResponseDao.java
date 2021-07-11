@@ -1,26 +1,16 @@
 package cizlolbot.twitch.dao;
 
 import cizlolbot.twitch.model.CommandResponse;
+import com.google.inject.Singleton;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Singleton
 public class InMemoryCommandResponseDao implements CommandResponseDao {
     private Map<String, CommandResponse> db = new HashMap<>();
-    private static InMemoryCommandResponseDao instance;
-
-    private InMemoryCommandResponseDao() {
-
-    }
-
-    public static InMemoryCommandResponseDao getInstance() {
-        if (instance == null) {
-            instance = new InMemoryCommandResponseDao();
-        }
-        return instance;
-    }
 
     @Override
     public Map<String, CommandResponse> findByIds(Set<String> ids) {

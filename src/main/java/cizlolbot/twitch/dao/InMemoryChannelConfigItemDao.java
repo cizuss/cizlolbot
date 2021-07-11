@@ -1,26 +1,16 @@
 package cizlolbot.twitch.dao;
 
 import cizlolbot.twitch.model.ChannelConfigItem;
+import com.google.inject.Singleton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Singleton
 public class InMemoryChannelConfigItemDao implements ChannelConfigItemDao {
     private Map<String, List<ChannelConfigItem>> db = new HashMap<>();
-    private static InMemoryChannelConfigItemDao instance;
-
-    private InMemoryChannelConfigItemDao() {
-
-    }
-
-    public static InMemoryChannelConfigItemDao getInstance() {
-        if (instance == null) {
-            instance = new InMemoryChannelConfigItemDao();
-        }
-        return instance;
-    }
 
     @Override
     public List<ChannelConfigItem> getByChannelName(String channelName) {

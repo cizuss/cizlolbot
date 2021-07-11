@@ -8,27 +8,21 @@ import cizlolbot.twitch.model.CommandTriggerType;
 import cizlolbot.twitch.service.ChannelConfigService;
 import cizlolbot.twitch.service.RichChannelConfigItem;
 import cizlolbot.twitch.service.TwitchService;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import java.util.Map;
 import java.util.function.Consumer;
 
+@Singleton
 public class ChannelConfigBasedHandlerService implements HandlerService {
     private ChannelConfigService channelConfigService;
     private TwitchService twitchService;
 
-    private static ChannelConfigBasedHandlerService instance;
-
-    private ChannelConfigBasedHandlerService(ChannelConfigService channelConfigService, TwitchService twitchService) {
+    @Inject
+    public ChannelConfigBasedHandlerService(ChannelConfigService channelConfigService, TwitchService twitchService) {
         this.channelConfigService = channelConfigService;
         this.twitchService = twitchService;
-    }
-
-    public static ChannelConfigBasedHandlerService getInstance(ChannelConfigService channelConfigService,
-                                                               TwitchService twitchService) {
-        if (instance == null) {
-            instance = new ChannelConfigBasedHandlerService(channelConfigService, twitchService);
-        }
-        return instance;
     }
 
     @Override

@@ -4,6 +4,8 @@ import cizlolbot.twitch.service.TwitchService;
 import cizlolbot.twitch.irc.IrcPrivateMessage;
 import cizlolbot.twitch.irc.IrcUtils;
 import cizlolbot.twitch.utils.StringUtils;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import java.util.function.Consumer;
 
@@ -11,6 +13,7 @@ import java.util.function.Consumer;
  * HandlerService implementation that simply writes "hi" or "hello" in the chat when somebody types "hi" or "hello";
  * It's rate limited in case there are a lot of greetings messages in a short period of time
  */
+@Singleton
 public class GreetingsHandlerService implements HandlerService {
     private TwitchService twitchService;
 
@@ -18,6 +21,7 @@ public class GreetingsHandlerService implements HandlerService {
     private int nrMessages = 0;
     private int limitPerMinute = 3;
 
+    @Inject
     public GreetingsHandlerService(TwitchService twitchService) {
         this.twitchService = twitchService;
     }

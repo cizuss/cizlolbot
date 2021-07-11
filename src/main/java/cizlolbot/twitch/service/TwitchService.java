@@ -1,6 +1,8 @@
 package cizlolbot.twitch.service;
 
 import cizlolbot.twitch.oauth2.TokenRetriever;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -9,6 +11,7 @@ import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 
+@Singleton
 public class TwitchService {
     private static final String addressStr = "irc.chat.twitch.tv";
     private static final String nickname = "cizlolbot";
@@ -19,19 +22,11 @@ public class TwitchService {
 
     private String currentChannel;
 
-    private TokenRetriever tokenRetriever = TokenRetriever.getInstance();
-    private static TwitchService instance;
+    private TokenRetriever tokenRetriever;
 
-    // singleton
-    private TwitchService() {
-
-    }
-
-    public static TwitchService getInstance() {
-        if (instance == null) {
-            instance = new TwitchService();
-        }
-        return instance;
+    @Inject
+    public TwitchService(TokenRetriever tokenRetriever) {
+        this.tokenRetriever = tokenRetriever;
     }
 
     public void connectToIrcChat() {

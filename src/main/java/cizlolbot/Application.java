@@ -1,24 +1,21 @@
 package cizlolbot;
 
-import cizlolbot.twitch.factory.ChannelConfigItemDaoFactory;
-import cizlolbot.twitch.factory.CommandResponseDaoFactory;
-import cizlolbot.twitch.handlers.ChannelConfigBasedHandlerService;
-import cizlolbot.twitch.handlers.HandlerService;
 import cizlolbot.twitch.irc.IrcBot;
 import cizlolbot.twitch.model.CommandTriggerType;
+import cizlolbot.twitch.module.GuiceModules;
 import cizlolbot.twitch.service.ChannelConfigService;
-import cizlolbot.twitch.service.TwitchService;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 public class Application {
-    public static void main(String[] args) throws InterruptedException {
-        ChannelConfigService channelConfigService = ChannelConfigService.getInstance(ChannelConfigItemDaoFactory.createDao(),
-                CommandResponseDaoFactory.createDao());
-        TwitchService twitchService = TwitchService.getInstance();
 
-        HandlerService handlerService = ChannelConfigBasedHandlerService.getInstance(channelConfigService, twitchService);
+    public static void main(String[] args) throws InterruptedException {
+        Injector injector = Guice.createInjector(GuiceModules.all());
+        ChannelConfigService channelConfigService = injector.getInstance(ChannelConfigService.class);
 
         channelConfigService.addStaticReply("lck", "KEKW", "LULW", CommandTriggerType.CONTAINS);
-        IrcBot ircBot = new IrcBot(twitchService, handlerService);
+
+        IrcBot ircBot = injector.getInstance(IrcBot.class);
 
         ircBot.run("lck");
     }
