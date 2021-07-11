@@ -16,17 +16,8 @@ public class RichChannelConfigItem {
         return channelConfigItem;
     }
 
-    public RichChannelConfigItem setChannelConfigItem(ChannelConfigItem channelConfigItem) {
-        this.channelConfigItem = channelConfigItem;
-        return this;
-    }
-
     public CommandResponse getCommandResponse() {
         return commandResponse;
     }
 
-    public RichChannelConfigItem setCommandResponse(CommandResponse commandResponse) {
-        this.commandResponse = commandResponse;
-        return this;
-    }
 }

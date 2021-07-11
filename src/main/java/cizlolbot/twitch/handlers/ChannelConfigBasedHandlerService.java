@@ -5,6 +5,7 @@ import cizlolbot.twitch.irc.IrcUtils;
 import cizlolbot.twitch.model.CommandReponseType;
 import cizlolbot.twitch.model.CommandResponse;
 import cizlolbot.twitch.model.CommandTriggerType;
+import cizlolbot.twitch.ratelimit.RateLimiter;
 import cizlolbot.twitch.service.ChannelConfigService;
 import cizlolbot.twitch.service.RichChannelConfigItem;
 import cizlolbot.twitch.service.TwitchService;
@@ -18,11 +19,14 @@ import java.util.function.Consumer;
 public class ChannelConfigBasedHandlerService implements HandlerService {
     private ChannelConfigService channelConfigService;
     private TwitchService twitchService;
+    private RateLimiter rateLimiter;
 
     @Inject
-    public ChannelConfigBasedHandlerService(ChannelConfigService channelConfigService, TwitchService twitchService) {
+    public ChannelConfigBasedHandlerService(ChannelConfigService channelConfigService, TwitchService twitchService,
+                                            RateLimiter rateLimiter) {
         this.channelConfigService = channelConfigService;
         this.twitchService = twitchService;
+        this.rateLimiter = rateLimiter;
     }
 
     @Override
@@ -58,10 +62,10 @@ public class ChannelConfigBasedHandlerService implements HandlerService {
     private void handleCommandResponse(CommandResponse commandResponse, String channel,
                                        IrcPrivateMessage message) {
         if (commandResponse.getType().equals(CommandReponseType.STATIC_REPLY)) {
-            twitchService.sendMessage(commandResponse.getStaticResponse(), channel);
+            rateLimiter.throttle(commandResponse.getId(), () -> twitchService.sendMessage(commandResponse.getStaticResponse(), channel));
         } else if (commandResponse.getType().equals(CommandReponseType.STATIC_REPLY_TO_SENDER)) {
             String twitchMessage = String.format("@%s %s", message.getFrom(), commandResponse.getStaticResponse());
-            twitchService.sendMessage(twitchMessage, channel);
+            rateLimiter.throttle(commandResponse.getId(), () -> twitchService.sendMessage(twitchMessage, channel));
         }
     }
 }

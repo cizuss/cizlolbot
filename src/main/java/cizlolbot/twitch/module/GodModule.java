@@ -6,6 +6,8 @@ import cizlolbot.twitch.dao.InMemoryChannelConfigItemDao;
 import cizlolbot.twitch.dao.InMemoryCommandResponseDao;
 import cizlolbot.twitch.handlers.ChannelConfigBasedHandlerService;
 import cizlolbot.twitch.handlers.HandlerService;
+import cizlolbot.twitch.ratelimit.InMemoryRateLimiter;
+import cizlolbot.twitch.ratelimit.RateLimiter;
 import com.google.inject.AbstractModule;
 
 /**
@@ -18,5 +20,6 @@ public class GodModule extends AbstractModule {
         bind(HandlerService.class).to(ChannelConfigBasedHandlerService.class);
         bind(ChannelConfigItemDao.class).to(InMemoryChannelConfigItemDao.class);
         bind(CommandResponseDao.class).to(InMemoryCommandResponseDao.class);
+        bind(RateLimiter.class).toInstance(new InMemoryRateLimiter(3));
     }
 }
