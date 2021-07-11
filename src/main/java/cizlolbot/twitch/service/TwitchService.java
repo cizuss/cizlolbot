@@ -1,4 +1,4 @@
-package cizlolbot.twitch;
+package cizlolbot.twitch.service;
 
 import cizlolbot.twitch.oauth2.TokenRetriever;
 

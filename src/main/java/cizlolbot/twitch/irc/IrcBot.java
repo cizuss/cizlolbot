@@ -1,6 +1,6 @@
 package cizlolbot.twitch.irc;
 
-import cizlolbot.twitch.TwitchService;
+import cizlolbot.twitch.service.TwitchService;
 import cizlolbot.twitch.handlers.HandlerService;
 
 public class IrcBot {

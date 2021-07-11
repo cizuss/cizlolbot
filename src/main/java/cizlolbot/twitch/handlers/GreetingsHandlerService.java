@@ -1,6 +1,6 @@
 package cizlolbot.twitch.handlers;
 
-import cizlolbot.twitch.TwitchService;
+import cizlolbot.twitch.service.TwitchService;
 import cizlolbot.twitch.irc.IrcPrivateMessage;
 import cizlolbot.twitch.irc.IrcUtils;
 import cizlolbot.twitch.utils.StringUtils;

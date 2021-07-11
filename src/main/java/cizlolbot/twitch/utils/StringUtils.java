@@ -10,4 +10,9 @@ public class StringUtils {
         }
         return false;
     }
+
+    public static boolean startsWithWord(String string, String word) {
+        String[] words = string.split(" ");
+        return words.length >= 1 && words[0].equals(word);
+    }
 }
