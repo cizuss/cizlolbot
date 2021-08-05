@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ChannelConfigItemDao {
     List<ChannelConfigItem> getByChannelName(String channelName);
-    void insert(ChannelConfigItem configItem);
+    void insertOrUpdate(ChannelConfigItem configItem);
 }

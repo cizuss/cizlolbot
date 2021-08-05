@@ -71,7 +71,7 @@ public class TokenRetriever {
             uriBuilder.setParameter("client_id", clientId);
             uriBuilder.setParameter("client_secret", clientSecret);
             uriBuilder.setParameter("grant_type", "refresh_token");
-            uriBuilder.setParameter("scope", "chat:read chat:edit channel:moderate whispers:read whispers:edit channel_editor");
+            uriBuilder.setParameter("scope", "chat:read chat:edit channel:moderate whispers:read whispers:edit channel_editor moderation:read");
             uriBuilder.setParameter("refresh_token", refreshToken);
             return uriBuilder.build();
         } catch (URISyntaxException e) {

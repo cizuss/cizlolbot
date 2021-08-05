@@ -4,6 +4,7 @@ public class CommandResponse {
     private String id;
     private CommandReponseType type;
     private String staticResponse;
+    private String command;
 
     public String getId() {
         return id;
@@ -29,6 +30,15 @@ public class CommandResponse {
 
     public CommandResponse setStaticResponse(String staticResponse) {
         this.staticResponse = staticResponse;
+        return this;
+    }
+
+    public String getCommand() {
+        return command;
+    }
+
+    public CommandResponse setCommand(String command) {
+        this.command = command;
         return this;
     }
 }

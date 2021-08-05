@@ -18,11 +18,13 @@ public class InMemoryChannelConfigItemDao implements ChannelConfigItemDao {
     }
 
     @Override
-    public void insert(ChannelConfigItem configItem) {
+    public void insertOrUpdate(ChannelConfigItem configItem) {
         if (!db.containsKey(configItem.getChannelName())) {
             db.put(configItem.getChannelName(), new ArrayList<>());
         }
         List<ChannelConfigItem> items = db.get(configItem.getChannelName());
+        items.stream().filter(its -> its.getCommand().equals(configItem.getCommand()))
+                .findFirst().ifPresent(items::remove);
         items.add(configItem);
     }
 

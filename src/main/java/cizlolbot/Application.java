@@ -13,10 +13,16 @@ public class Application {
         Injector injector = Guice.createInjector(GuiceModules.all());
         ChannelConfigService channelConfigService = injector.getInstance(ChannelConfigService.class);
 
-        channelConfigService.addStaticReply("lck", "KEKW", "LULW", CommandTriggerType.CONTAINS);
+        channelConfigService.addStaticReply("cizuss", "hi", "/mods", CommandTriggerType.CONTAINS);
+        channelConfigService.addStaticReplyToSender("cizuss", "hello", "hi", CommandTriggerType.CONTAINS);
+        channelConfigService.addSetLolRegion("cizuss", "!setregion");
+        channelConfigService.addSetLolName("cizuss", "!setsummoner");
+        channelConfigService.addOpGGCommand("cizuss", "!opgg");
+        channelConfigService.addRankCommand("cizuss", "!rank");
+        channelConfigService.addSetCommand("cizuss", "!setcommand");
 
         IrcBot ircBot = injector.getInstance(IrcBot.class);
 
-        ircBot.run("lck");
+        ircBot.run("cizuss");
     }
 }

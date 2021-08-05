@@ -34,11 +34,57 @@ public class ChannelConfigService {
         CommandResponse commandResponse = new CommandResponse().setId(UUID.randomUUID().toString())
                 .setType(CommandReponseType.STATIC_REPLY).setStaticResponse(staticReply);
 
+        addConfig(channel, command, triggerType, commandResponse);
+    }
+
+    public void addSetCommand(String channel, String command) {
+        CommandResponse commandResponse = new CommandResponse().setId(UUID.randomUUID().toString())
+                .setType(CommandReponseType.SET_COMMAND);
+
+        addConfig(channel, command, CommandTriggerType.STARTS_WITH, commandResponse);
+    }
+
+    public void addStaticReplyToSender(String channel, String command, String staticReply, CommandTriggerType triggerType) {
+        CommandResponse commandResponse = new CommandResponse().setId(UUID.randomUUID().toString())
+                .setType(CommandReponseType.STATIC_REPLY_TO_SENDER).setStaticResponse(staticReply);
+
+        addConfig(channel, command, triggerType, commandResponse);
+    }
+
+    public void addSetLolRegion(String channel, String command) {
+        CommandResponse commandResponse = new CommandResponse().setId(UUID.randomUUID().toString())
+                .setType(CommandReponseType.SET_REGION).setCommand(command);
+
+        addConfig(channel, command, CommandTriggerType.STARTS_WITH, commandResponse);
+    }
+
+    public void addSetLolName(String channel, String command) {
+        CommandResponse commandResponse = new CommandResponse().setId(UUID.randomUUID().toString())
+                .setType(CommandReponseType.SET_SUMMONER_NAME).setCommand(command);
+
+        addConfig(channel, command, CommandTriggerType.STARTS_WITH, commandResponse);
+    }
+
+    public void addOpGGCommand(String channel, String command) {
+        CommandResponse commandResponse = new CommandResponse().setId(UUID.randomUUID().toString())
+                .setType(CommandReponseType.OPGG_LINK).setCommand(command);
+
+        addConfig(channel, command, CommandTriggerType.EQUALS, commandResponse);
+    }
+
+    public void addRankCommand(String channel, String command) {
+        CommandResponse commandResponse = new CommandResponse().setId(UUID.randomUUID().toString())
+                .setType(CommandReponseType.RANK).setCommand(command);
+
+        addConfig(channel, command, CommandTriggerType.EQUALS, commandResponse);
+    }
+
+    private void addConfig(String channel, String command, CommandTriggerType triggerType, CommandResponse commandResponse) {
         ChannelConfigItem configItem = new ChannelConfigItem().setChannelName(channel).setCommand(command)
                 .setCommandTriggerType(triggerType).setCommandResponseId(commandResponse.getId());
 
         commandResponseDao.insert(commandResponse);
-        channelConfigItemDao.insert(configItem);
+        channelConfigItemDao.insertOrUpdate(configItem);
 
         cachedConfig.remove(channel);
     }
